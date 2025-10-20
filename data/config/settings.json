@@ -8,10 +8,11 @@
 
 	"graphics":{
 		"icons":{
-		"remnantflag":"graphics/factions/domain_explorarium.png",
+		"remnantflag":"graphics/factions/ai_remnant.png",
 	     },
 	},
 	"ruleCommandPackages":[
 		"data.remnantstart.scripts.rulecmd",
 	],	
+
 }
