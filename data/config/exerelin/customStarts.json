@@ -1,0 +1,11 @@
+{
+	"starts":[
+		{
+			"id":"rs_remnantStart",
+			"name":"Assimilate",
+			"difficulty":"Normal",
+			"desc":"You are forever hated by most factions, but can use any Remnant Nexus for restocking and other new fleet-related services.",
+			"className":"data.remnantstart.customStart.rs_remnantCustomStart",
+		},
+	],
+}

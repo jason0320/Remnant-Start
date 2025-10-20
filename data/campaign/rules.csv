@@ -1,0 +1,76 @@
+id,trigger,conditions,script,text,options,notes,,,,,,,,
+# nexus custom start interactions,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+rs_nexusOpen,BeginFleetEncounter,"$faction.id == remnant
+$fleetType == battlestation
+$global.rs_nexusStart score:10000
+$player.commissionFactionId == remnant","rs_nexusStartRulecmd 0
+ShowImageVisual orbital","The Remnant Nexus welcomes you into its graces, allowing you to make use of its services.","0:rs_nexusCargoPicker:Evaluate the Nexus' cargo
+10:rs_nexusProductionPicker:Request immediate production
+30:rs_nexusStorage:Access the storage network
+50:rs_nexusRepair:Initiate fleet repairs
+70:rs_nexusDeconstructMain:Manage automated hulls
+90:rs_nexusConstructMenu:Consider building a new Nexus
+100:defaultLeave:Leave",,,,,,,,,,,,,
+rs_nexusDialog1,DialogOptionSelected,$option == rs_nexusCargoPicker,rs_nexusStartRulecmd 1,,,,,,,,,,,,,,,
+rs_nexusDialog2,DialogOptionSelected,$option == rs_nexusProductionPicker,rs_nexusStartRulecmd 2,,,,,,,,,,,,,,,
+rs_nexusDialog3,DialogOptionSelected,$option == rs_nexusStorage,"EndConversation NO_CONTINUE
+rs_nexusStartRulecmd 3",,,,,,,,,,,,,,,
+rs_nexusDialog4,DialogOptionSelected,$option == rs_nexusRepair,rs_nexusStartRulecmd 4,Your $shipOrFleet has been fully repaired at no cost.,,,,,,,,,,,,,,
+rs_nexusDeconstruct1,DialogOptionSelected,$option == rs_nexusDeconstructMain,"rs_nexusStartRulecmd 13
+AddTextSmall ""You may deconstruct automated hulls here, as long as they normally require the Automated Ships skill to recover.""
+AddTextSmall ""Doing so will destroy the ship, but will allow the Remnant to use the hull.""
+AddTextSmall ""Access to the faction's weapons, fighters and AI cores (if applicable) will be gained at 50/75/90% collection progress respectively."" highlight",,"0:rs_nexusDeconstruct:Deconstruct automated hulls
+30:rs_nexusRecap:View collection progress
+50:rs_nexusBack:Return
+",,,,,,,,,,,,,
+rs_nexusDeconstruct2,DialogOptionSelected,$option == rs_nexusDeconstruct,rs_nexusStartRulecmd 8,,,,,,,,,,,,,,,
+rs_nexusDeconstruct3,DialogOptionSelected,$option == rs_nexusRecap,rs_nexusStartRulecmd 12,,,,,,,,,,,,,,,
+rs_nexusDialog6,DialogOptionSelected,$option == rs_nexusDeconstructProceed,rs_nexusStartRulecmd 9,,,,,,,,,,,,,,,
+rs_nexusDialog7,DialogOptionSelected,$option == rs_nexusBack,rs_nexusStartRulecmd 5,,,,,,,,,,,,,,,
+rs_nexusDialog8,OpenCommLink,"$faction.id == remnant score:10000
+$entity.fleetType == battlestation
+!$entity.isHostile
+$global.rs_nexusStart",rs_nexusStartRulecmd 5,,,# TODO: FINISH ADDING REMNANT RAID QUEST,,,,,,,,,,,,
+rs_nexusConstructMenu,DialogOptionSelected,$option == rs_nexusConstructMenu,rs_nexusStartRulecmd 14,"With sufficient materials, you may dispatch a fleet to a target star system to construct a new Nexus. It will be fully operational 30 days after the fleet arrives. You must have visited the system at least once.
+You may only dispatch one fleet every 90 days.","0:rs_nexusConstruct:Choose a location
+50:rs_nexusBack:Back",,,,,,,,,
+rs_nexusConstruct,DialogOptionSelected,$option == rs_nexusConstruct,rs_nexusStartRulecmd 15,,,,,,,,,,,
+rs_nexusStorage1,MarketPostOpen,$id == rs_nexusStorage score:10000,"$tradeMode = OPEN 0
+FireBest MarketPostDock
+rs_nexusStartRulecmd 6",,,,,,,,,,,,,,,
+rs_nexusStorage2,TradePanelFlavorText,$id == rs_nexusStorage score:1000,,The flow of vast datastores bring with them opportunity. No distance is too great to retrieve a perfect simulacra of vessels and armaments once uploaded.,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+rs_nexusStorage3,PopulateOptions,"$id == rs_nexusStorage score:10000
+$menuState == main",rs_nexusStartRulecmd 7,,,,,,,,,,,,,,,
+rs_nexusComms,DialogOptionSelected,$option == rs_nexusComms,"BeginConversation nex_dissonant
+FireBest PickGreeting
+rs_nexusStartRulecmd 10",,,,,,,,,,,,,,,
+rs_nexusRedirect,DialogOptionSelected,$option == rs_nexusRedirect,"rs_nexusStartRulecmd 11
+rs_nexusStartRulecmd 5",,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+rs_nexusDefenderSkip,DialogOptionSelected,"$option == salExplore score:1000
+rs_getRemnantDefenders 1
+$global.rs_nexusStart
+$player.commissionFactionId == remnant","
+rs_getRemnantDefenders 2","A fleet of Remnant drones is guarding this object. They don't appear to recognize you yet.
+
+They're currently engaged in an automatic defensive protocol, but you may transmit your IFF code to disengage it.",0:rs_noyeetRemmies:Continue as normal,,,,,,,,,,,,,
+rs_nexusDefenderSkip2,DialogOptionSelected,$option == rs_yeetRemmies,rs_getRemnantDefenders 3,"Your $shipOrFleet chirps out a request with your transponder code, with a request to stand down. Some moments later, the drone defenders process the information and plod away from the wreck in search of a new task.",0:salBeatDefendersContinue:Continue,,,,,,,,,,,,,
+rs_nexusDefenderSkip3,DialogOptionSelected,$option == rs_noyeetRemmies,SalvageDefenderInteraction,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+# raid option,,,,,,,,,,,,,,,,,,
+rs_nexusPartyTimeShow,DialogOptionSelected,$option == rs_nexusPartyTimeShow,rs_nexusStartRulecmd 15,,"0:rs_nexusPartyTimeInit:Accept the request
+30:rs_nexusBack:Go back",,,,,,,,,,,,,
+rs_nexusPartyTimeInit,DialogOptionSelected,$option == rs_nexusPartyTimeInit,rs_nexusStartRulecmd 16,,0:rs_nexusBack:Continue,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,

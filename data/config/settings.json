@@ -1,0 +1,17 @@
+
+{
+
+	"plugins":{
+		"rs_remnantStartCombatPlugin":"data.remnantstart.customStart.rs_remnantStartCombatPlugin",
+	},  
+
+
+	"graphics":{
+		"icons":{
+		"remnantflag":"graphics/factions/domain_explorarium.png",
+	     },
+	},
+	"ruleCommandPackages":[
+		"data.remnantstart.scripts.rulecmd",
+	],	
+}

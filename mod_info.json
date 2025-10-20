@@ -1,0 +1,20 @@
+{
+  	"id":"zz remnantstart",
+	"name":"zz Remnant Start",
+	"author":"gamer",	
+	"version":"0.1",
+	"description":"Add Remnant Start",
+	"gameVersion":"0.98a-RC8",
+	"jars":["jars/remnantstart.jar"],
+	"modPlugin":"data.remnantstart.plugins.RS_modPlugin",
+	 "dependencies": [
+		{
+			"id": "MagicLib",
+			"name": "Magiclib",
+		},
+		{
+			"id": "shaderLib",
+			"name": "Graphicslib",
+		},
+		],
+}
