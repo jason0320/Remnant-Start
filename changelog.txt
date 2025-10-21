@@ -1,2 +1,11 @@
+v0.4 (2025/10/21)
+- Fix Random Sector crash
+
+v0.3 (2025/10/21)
+- Add function to select experience and assets at start
+
+v0.2 (2025/10/20)
+- Image Fix
+
 v0.1 (2025/10/20)
 - Init Build

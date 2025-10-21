@@ -20,6 +20,7 @@ import exerelin.campaign.PlayerFactionStore
 import exerelin.campaign.customstart.CustomStart
 import exerelin.utilities.StringHelper
 import lunalib.lunaExtensions.getCustomEntitiesWithType
+import lunalib.lunaExtensions.getSystemsWithTag
 import org.lazywizard.lazylib.MathUtils
 import org.magiclib.kotlin.getNearbyFleets
 import org.magiclib.kotlin.getStationFleet
@@ -98,7 +99,8 @@ class rs_remnantCustomStart: CustomStart() {
                 cargo.addCommodity(Commodities.HEAVY_MACHINERY, member.cargoCapacity*0.1f)
             }
             fleet.fleetData.setSyncNeeded()
-            val stationsystem = Global.getSector().getStarSystem("corvus")
+            //val stationsystem = Global.getSector().getStarSystem("corvus")
+            val stationsystem = Global.getSector().getSystemsWithTag(Tags.THEME_REMNANT_MAIN).get(0)
             val station: SectorEntityToken = stationsystem.addCustomEntity("rs_nexusStorage", "Nexus Global Storage", "station_side05", Factions.NEUTRAL)
            // val market: MarketAPI = Global.getFactory().createMarket("rs_nexusStorage", "Nexus Global Storage", 0)
             Misc.setAbandonedStationMarket("rs_nexusStorage", station)
@@ -169,6 +171,5 @@ class rs_remnantCustomStart: CustomStart() {
 
 
     return cargo
-
 
 }
