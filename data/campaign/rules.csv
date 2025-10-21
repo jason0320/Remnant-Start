@@ -11,6 +11,8 @@ ShowImageVisual orbital","The Remnant Nexus welcomes you into its graces, allowi
 50:rs_nexusRepair:Initiate fleet repairs
 70:rs_nexusDeconstructMain:Manage automated hulls
 90:rs_nexusConstructMenu:Consider building a new Nexus
+95:rs_nexusPartyTimeShow:Raid requests
+96:rs_nexusPartyTimeReward:Raid rewards
 100:defaultLeave:Leave",,,,,,,,,,,,,
 rs_nexusDialog1,DialogOptionSelected,$option == rs_nexusCargoPicker,rs_nexusStartRulecmd 1,,,,,,,,,,,,,,,
 rs_nexusDialog2,DialogOptionSelected,$option == rs_nexusProductionPicker,rs_nexusStartRulecmd 2,,,,,,,,,,,,,,,
@@ -60,9 +62,10 @@ rs_nexusDefenderSkip2,DialogOptionSelected,$option == rs_yeetRemmies,rs_getRemna
 rs_nexusDefenderSkip3,DialogOptionSelected,$option == rs_noyeetRemmies,SalvageDefenderInteraction,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,
 # raid option,,,,,,,,,,,,,,,,,,
-rs_nexusPartyTimeShow,DialogOptionSelected,$option == rs_nexusPartyTimeShow,rs_nexusStartRulecmd 15,,"0:rs_nexusPartyTimeInit:Accept the request
+rs_nexusPartyTimeShow,DialogOptionSelected,$option == rs_nexusPartyTimeShow,rs_nexusStartRulecmd 16,,"0:rs_nexusPartyTimeInit:Accept the request
 30:rs_nexusBack:Go back",,,,,,,,,,,,,
-rs_nexusPartyTimeInit,DialogOptionSelected,$option == rs_nexusPartyTimeInit,rs_nexusStartRulecmd 16,,0:rs_nexusBack:Continue,,,,,,,,,,,,,
+rs_nexusPartyTimeInit,DialogOptionSelected,$option == rs_nexusPartyTimeInit,rs_nexusStartRulecmd 17,,0:rs_nexusBack:Continue,,,,,,,,,,,,,
+rs_nexusPartyTimeReward,DialogOptionSelected,$option == rs_nexusPartyTimeReward,rs_nexusStartRulecmd 18,,0:rs_nexusBack:Continue,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,

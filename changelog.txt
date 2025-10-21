@@ -1,3 +1,6 @@
+v0.5 (2025/10/22)
+- Add satbomb mission and reward
+
 v0.4 (2025/10/21)
 - Fix Random Sector crash
 
