@@ -4,8 +4,8 @@
 			"id":"rs_remnantStart",
 			"name":"Assimilate",
 			"difficulty":"Normal",
-			"desc":"You are forever hated by most factions, but can use any Remnant Nexus for restocking and other new fleet-related services.",
-			"className":"data.remnantstart.customStart.rs_remnantCustomStart",
-		},
-	],
+      	    "desc":"Abandon humanity and take your chances. Start with the Automated Ships skill and the ability to pilot automated ships, as well as use any Remnant Nexus as a market for restocking and other new fleet-related services.",
+			"className":"data.remnantstart.customStart.rs_remnantCustomStart"
+		}
+	]
 }

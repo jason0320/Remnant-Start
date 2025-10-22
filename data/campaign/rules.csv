@@ -12,7 +12,6 @@ ShowImageVisual orbital","The Remnant Nexus welcomes you into its graces, allowi
 70:rs_nexusDeconstructMain:Manage automated hulls
 90:rs_nexusConstructMenu:Consider building a new Nexus
 95:rs_nexusPartyTimeShow:Raid requests
-96:rs_nexusPartyTimeReward:Raid rewards
 100:defaultLeave:Leave",,,,,,,,,,,,,
 rs_nexusDialog1,DialogOptionSelected,$option == rs_nexusCargoPicker,rs_nexusStartRulecmd 1,,,,,,,,,,,,,,,
 rs_nexusDialog2,DialogOptionSelected,$option == rs_nexusProductionPicker,rs_nexusStartRulecmd 2,,,,,,,,,,,,,,,
