@@ -62,6 +62,14 @@ class rs_nexusStartRulecmd: BaseCommandPlugin() { // stuff to handle nexus inter
                 dialog.textPanel.addPara("Each Nexus has its own cargo for offer, and are prepared to produce Remnant hulls and weapons instantaneously - provided you have the credits to authorize the production, that is.")
                 dialog.textPanel.setFontInsignia()
 
+                dialog.optionPanel.removeOption("defaultLeave")
+                if (Global.getSector().intelManager.hasIntelOfClass(rs_nexusRaidIntel::class.java) && Global.getSector().memoryWithoutUpdate.getInt("\$rs_nexusParty")==1){
+                    dialog.optionPanel.addOption("Raid rewards", "rs_nexusPartyTimeReward")
+                }
+                else if (!Global.getSector().intelManager.hasIntelOfClass(rs_nexusRaidIntel::class.java) && !Global.getSector().memoryWithoutUpdate.getBoolean("\$rs_nexusPartyTimeout")){
+                    dialog.optionPanel.addOption("Raid requests", "rs_nexusPartyTimeShow")
+                }
+                dialog.optionPanel.addOption("Leave", "defaultLeave")
             }
 
             1 -> {

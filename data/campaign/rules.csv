@@ -5,7 +5,6 @@ rs_nexusOpen,BeginFleetEncounter,"$faction.id == remnant
 $fleetType == battlestation
 $global.rs_nexusStart score:10000
 $player.commissionFactionId == remnant","rs_nexusStartRulecmd 0
-rs_nexusStartRulecmd 5
 ShowImageVisual orbital","The Remnant Nexus welcomes you into its graces, allowing you to make use of its services.","0:rs_nexusCargoPicker:Evaluate the Nexus' cargo
 10:rs_nexusProductionPicker:Request immediate production
 30:rs_nexusStorage:Access the storage network
