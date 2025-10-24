@@ -143,7 +143,7 @@ class rs_nexusStartRulecmd: BaseCommandPlugin() { // stuff to handle nexus inter
             dialog.optionPanel.addOption("Initiate fleet repairs", "rs_nexusRepair")
             dialog.optionPanel.setTooltip("rs_nexusRepair", "A free automated repair procedure. Restores all ships to full CR and hull integrity at no cost.")
             dialog.optionPanel.addOption("Manage automated hulls", "rs_nexusDeconstructMain")
-            dialog.optionPanel.setTooltip("rs_nexusDeconstruct", "Destroy an automated hull to add it to the Remnant' known hulls.")
+            dialog.optionPanel.setTooltip("rs_nexusDeconstruct", "Destroy an automated hull to add it to the Remnant's known hulls.")
             dialog.optionPanel.addOption("Consider building a new Nexus", "rs_nexusConstructMenu")
             dialog.optionPanel.setTooltip("rs_nexusConstructMenu", "Construct a new Nexus")
             if (Global.getSector().intelManager.hasIntelOfClass(rs_nexusRaidIntel::class.java) && Global.getSector().memoryWithoutUpdate.getInt("\$rs_nexusParty")==1){
@@ -610,7 +610,7 @@ fun getCost(cargo: CargoAPI): Float {
                         }
                         val para1 = dialog.textPanel.addPara(member!!.shipName + ", a " + member.hullSpec.hullNameWithDashClass + " is selected.").setHighlight(member.shipName)
                         showFactionInfo(factionspec, dialog)
-                        dialog.textPanel.addPara("Proceeding will destroy the ship and add it to the Remnant' known ships.").setHighlight("destroy", "add")
+                        dialog.textPanel.addPara("Proceeding will destroy the ship and add it to the Remnant's known ships.").setHighlight("destroy", "add")
                         dialog.textPanel.addPara("This action cannot be undone.").setColor(Color.RED)
                         dialog.textPanel.addPara("Would you like to proceed?")
                         dialog.visualPanel.showFleetMemberInfo(member)
@@ -971,11 +971,11 @@ fun getRaidReward(dialog: InteractionDialogAPI) {
         dialog.textPanel.addPara("RECONSTRUCTING MESSAGE - // waiting ... //")
         dialog.textPanel.setFontInsignia()
         dialog.textPanel.addPara("Voluminous greetings, caretaker.")
-        dialog.textPanel.addPara("$numgamma chocolate mousse, $numbeta lemon zest, $numalpha blueberry gummies and $numcredits credits are given ")
+        dialog.textPanel.addPara("$numgamma chocolate mousse, $numbeta lemon zest, $numalpha blueberry gummies and $numcredits credits are given")
             .setHighlight(numgamma.toString(), numbeta.toString(), numalpha.toString(), numcredits.toString())
 
         dialog.textPanel.setFontSmallInsignia()
-        dialog.textPanel.addPara("$numgamma gamma core, $numbeta beta core, $numalpha alpha core and $numcredits credits. are rewarded")
+        dialog.textPanel.addPara("$numgamma gamma core, $numbeta beta core, $numalpha alpha core and $numcredits credits are rewarded")
             .setHighlight(numgamma.toString(), numbeta.toString(), numalpha.toString(), numcredits.toString())
         dialog.textPanel.setFontInsignia()
 
