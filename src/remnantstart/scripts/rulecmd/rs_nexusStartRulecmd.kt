@@ -6,6 +6,7 @@ import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.Script
 import com.fs.starfarer.api.campaign.*
 import com.fs.starfarer.api.campaign.BattleAPI.BattleSide
+import com.fs.starfarer.api.campaign.comm.IntelInfoPlugin
 import com.fs.starfarer.api.campaign.econ.MarketAPI
 import com.fs.starfarer.api.campaign.rules.MemoryAPI
 import com.fs.starfarer.api.characters.PersonAPI
@@ -128,12 +129,13 @@ class rs_nexusStartRulecmd: BaseCommandPlugin() { // stuff to handle nexus inter
             dialog.optionPanel.setTooltip("rs_nexusDeconstruct", "Destroy an automated hull to add it to the Remnant' known hulls.")
             dialog.optionPanel.addOption("Consider building a new Nexus", "rs_nexusConstructMenu")
             dialog.optionPanel.setTooltip("rs_nexusConstructMenu", "Construct a new Nexus")
-            if (!Global.getSector().intelManager.hasIntelOfClass(rs_nexusRaidIntel::class.java) && !Global.getSector().memoryWithoutUpdate.getBoolean("\$rs_nexusPartyTimeout")){
-                dialog.optionPanel.addOption("Raid requests", "rs_nexusPartyTimeShow")
-            }
             if (Global.getSector().intelManager.hasIntelOfClass(rs_nexusRaidIntel::class.java) && Global.getSector().memoryWithoutUpdate.getInt("\$rs_nexusParty")==1){
                 dialog.optionPanel.addOption("Raid rewards", "rs_nexusPartyTimeReward")
             }
+            else if (!Global.getSector().intelManager.hasIntelOfClass(rs_nexusRaidIntel::class.java) && !Global.getSector().memoryWithoutUpdate.getBoolean("\$rs_nexusPartyTimeout")){
+                dialog.optionPanel.addOption("Raid requests", "rs_nexusPartyTimeShow")
+            }
+
             dialog.optionPanel.addOption("Cut the comm link", "cutCommLinkNoText")
             dialog.optionPanel.setShortcut("rs_nexusRepair", Keyboard.KEY_A, false, false,false , false)
             dialog.visualPanel.showPersonInfo(dialog.interactionTarget.activePerson)
@@ -870,9 +872,9 @@ fun getShowRaidTarget( dialog: InteractionDialogAPI,  target: MarketAPI?,  rewar
     val faccolor = Global.getSettings().getFactionSpec(spec).baseUIColor
     if (rewards!!.isEmpty()){
         val defense = targetmarket!!.getStats().getDynamic().getMod(Stats.GROUND_DEFENSES_MOD).computeEffective(0f)
-        rewardlist.add(0, (defense/100f).roundToInt().coerceAtMost(8))
-        rewardlist.add(1, (defense/500f).roundToInt().coerceAtMost(4))
-        rewardlist.add(2, (defense/1000f).roundToInt().coerceAtMost(2))
+        rewardlist.add(0, (defense/100f).roundToInt())
+        rewardlist.add(1, (defense/500f).roundToInt())
+        rewardlist.add(2, (defense/1000f).roundToInt())
         rewardlist.add(3, (defense*1000f).roundToInt())
     }
     var numgamma = rewardlist[0]
@@ -898,30 +900,27 @@ fun getShowRaidTarget( dialog: InteractionDialogAPI,  target: MarketAPI?,  rewar
 }
 
 fun doSetup(dialog: InteractionDialogAPI){
-    if (!Global.getSector().intelManager.hasIntelOfClass(rs_nexusRaidIntel::class.java)) {
-        Global.getSector().intelManager.addIntel(rs_nexusRaidIntel(targetmarket!!, rewardlist), false, dialog.textPanel)
-        Global.getSector().listenerManager.addListener(rs_nexusRaidIntel(targetmarket!!, rewardlist))
-        val targfaction = targetmarket!!.factionId
-        for (i in 0 until 2) {
-            val remmy = MagicCampaign.createFleetBuilder().setFleetName("Chauffeurs").setFleetFaction(Factions.REMNANTS)
-                .setAssignmentTarget(Global.getSector().playerFleet).setAssignment(FleetAssignment.ORBIT_PASSIVE)
-                .setMinFP(Global.getSector().playerFleet.fleetPoints / 2).setIsImportant(true)
-                .setSpawnLocation(Global.getSector().playerFleet.interactionTarget).setTransponderOn(false)
-                .setQualityOverride(2f).create()
-            remmy.memoryWithoutUpdate.apply {
-                set(MemFlags.MEMORY_KEY_MAKE_HOLD_VS_STRONGER, true)
-                set(MemFlags.MEMORY_KEY_ALLOW_PLAYER_BATTLE_JOIN_TOFF, true)
-                set(MemFlags.DO_NOT_TRY_TO_AVOID_NEARBY_FLEETS, true)
-                set(MemFlags.MEMORY_KEY_FLEET_DO_NOT_GET_SIDETRACKED, true)
-                set(MemFlags.MEMORY_KEY_FORCE_TRANSPONDER_OFF, true)
-                remmy.removeFirstAssignment()
-                remmy.addAssignment(FleetAssignment.ATTACK_LOCATION, targetmarket!!.primaryEntity, 30f)
-                //remmy.addScript(rs_chauffeurAI(remmy, targetmarket!!))
-            }
+    Global.getSector().intelManager.addIntel(rs_nexusRaidIntel(targetmarket!!, rewardlist), false, dialog.textPanel)
+    Global.getSector().listenerManager.addListener(rs_nexusRaidIntel(targetmarket!!, rewardlist))
+    val targfaction = targetmarket!!.factionId
+    for (i in 0 until 2) {
+        val remmy = MagicCampaign.createFleetBuilder().setFleetName("Chauffeurs").setFleetFaction(Factions.REMNANTS)
+            .setAssignmentTarget(Global.getSector().playerFleet).setAssignment(FleetAssignment.ORBIT_PASSIVE)
+            .setMinFP(Global.getSector().playerFleet.fleetPoints / 2).setIsImportant(true)
+            .setSpawnLocation(Global.getSector().playerFleet.interactionTarget).setTransponderOn(false)
+            .setQualityOverride(2f).create()
+        remmy.memoryWithoutUpdate.apply {
+            set(MemFlags.MEMORY_KEY_MAKE_HOLD_VS_STRONGER, true)
+            set(MemFlags.MEMORY_KEY_ALLOW_PLAYER_BATTLE_JOIN_TOFF, true)
+            set(MemFlags.DO_NOT_TRY_TO_AVOID_NEARBY_FLEETS, true)
+            set(MemFlags.MEMORY_KEY_FLEET_DO_NOT_GET_SIDETRACKED, true)
+            set(MemFlags.MEMORY_KEY_FORCE_TRANSPONDER_OFF, true)
+            remmy.removeFirstAssignment()
+            remmy.addAssignment(FleetAssignment.ATTACK_LOCATION, targetmarket!!.primaryEntity, 30f)
+            //remmy.addScript(rs_chauffeurAI(remmy, targetmarket!!))
         }
     }
-
-    }
+}
 
 fun getRaidReward(dialog: InteractionDialogAPI) {
 
@@ -956,7 +955,23 @@ fun getRaidReward(dialog: InteractionDialogAPI) {
         dialog.textPanel.setFontInsignia()
 
 
-        Global.getSector().listenerManager.removeListenerOfClass(rs_nexusRaidIntel::class.java)
+        val sector = Global.getSector()
+        val listenerMgr = sector.listenerManager
+        val intelMgr = sector.intelManager
+
+        listenerMgr.removeListenerOfClass(rs_nexusRaidIntel::class.java)
+
+        val toRemove = mutableListOf<IntelInfoPlugin>()
+        for (intel in intelMgr.intel) {
+            if (intel is rs_nexusRaidIntel) {
+                toRemove.add(intel)
+            }
+        }
+
+        for (intel in toRemove) {
+            intelMgr.removeIntel(intel)
+        }
+
         targetmarket = null
         rewardlist.clear()
         Global.getSector().memoryWithoutUpdate.set("\$rs_nexusPartyTimeout", true, 180f)
