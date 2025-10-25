@@ -31,7 +31,7 @@ rs_nexusDialog7,DialogOptionSelected,$option == rs_nexusBack,rs_nexusStartRulecm
 rs_nexusDialog8,OpenCommLink,"$faction.id == remnant score:10000
 $entity.fleetType == battlestation
 !$entity.isHostile
-$global.rs_nexusStart",rs_nexusStartRulecmd 5,,,# TODO: FINISH ADDING REMNANT RAID QUEST,,,,,,,,,,,,
+$global.rs_nexusStart",rs_nexusStartRulecmd 5,,,,,,,,,,,,,,,
 rs_nexusConstructMenu,DialogOptionSelected,$option == rs_nexusConstructMenu,rs_nexusStartRulecmd 14,"With sufficient materials, you may dispatch a fleet to a target star system to construct a new Nexus. It will be fully operational 30 days after the fleet arrives. You must have visited the system at least once.
 You may only dispatch one fleet every 90 days.","0:rs_nexusConstruct:Choose a location
 50:rs_nexusBack:Back",,,,,,,,,
