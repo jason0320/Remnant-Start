@@ -45,9 +45,7 @@ class RS_modPlugin: BaseModPlugin() {
             }
 
             val remmy = Global.getSector().getFaction(Factions.REMNANTS)
-            if (Global.getSettings().modManager.isModEnabled("aotd_qol")) {
-                remmy.isShowInIntelTab = true
-            }
+            remmy.isShowInIntelTab = true
         }
     }
 
