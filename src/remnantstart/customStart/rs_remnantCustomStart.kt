@@ -126,8 +126,13 @@ class rs_remnantCustomStart: CustomStart() {
                 market.factionId = Factions.REMNANTS
                 market.primaryEntity = station1
                 station1.market = market
-                market.addIndustry(Industries.SPACEPORT)
+                market.addCondition(Conditions.POPULATION_10)
+                market.addSubmarket(Submarkets.SUBMARKET_OPEN)
                 market.addSubmarket(Submarkets.SUBMARKET_STORAGE)
+                market.addIndustry(Industries.SPACEPORT)
+                market.addIndustry(Industries.POPULATION)
+                market.addTag(Tags.STATION)
+                market.addTag(Tags.MARKET_NO_OFFICER_SPAWN)
                 market.surveyLevel = MarketAPI.SurveyLevel.FULL
                 Global.getSector().economy.addMarket(market, false)
 
@@ -135,7 +140,6 @@ class rs_remnantCustomStart: CustomStart() {
                 station1.setInteractionImage("icons", "remnantflag")
                 station1.setCircularOrbitPointingDown(stationsystem.center, 0f, 10000f, 9999f)
             }
-
 
             //station.market.addIndustry(Industries.SPACEPORT)
 
@@ -156,7 +160,7 @@ class rs_remnantCustomStart: CustomStart() {
             Global.getSector().intelManager.addIntel(rs_nexusLocationIntel(), false)
             FactionCommissionIntel(Global.getSector().getFaction(Factions.REMNANTS)).missionAccepted()
             Global.getSector().memoryWithoutUpdate.set("\$nex_startLocation", startloc.id)
-            
+
         }
 
 

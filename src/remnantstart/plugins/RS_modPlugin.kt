@@ -2,16 +2,16 @@ package data.remnantstart.plugins
 
 import com.fs.starfarer.api.BaseModPlugin
 import com.fs.starfarer.api.Global
+import com.fs.starfarer.api.campaign.FleetAssignment
 import com.fs.starfarer.api.campaign.GenericPluginManagerAPI
+import com.fs.starfarer.api.campaign.SectorAPI
 import com.fs.starfarer.api.combat.ShipAPI
-import com.fs.starfarer.api.combat.ShipHullSpecAPI
-import com.fs.starfarer.api.impl.campaign.DerelictShipEntityPlugin
-import com.fs.starfarer.api.impl.campaign.ids.Abilities
 import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.impl.campaign.ids.Tags
-import com.fs.starfarer.api.loading.Description
-import data.remnantstart.scripts.*
+import data.remnantstart.customStart.rs_nexusRaidIntel
 import exerelin.campaign.DiplomacyManager
+import java.util.Random
+
 
 class RS_modPlugin: BaseModPlugin() {
 
@@ -44,6 +44,10 @@ class RS_modPlugin: BaseModPlugin() {
                 }
             }
 
+            val remmy = Global.getSector().getFaction(Factions.REMNANTS)
+            if (Global.getSettings().modManager.isModEnabled("aotd_qol")) {
+                remmy.isShowInIntelTab = true
+            }
         }
     }
 
