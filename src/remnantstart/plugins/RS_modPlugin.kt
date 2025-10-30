@@ -2,15 +2,13 @@ package data.remnantstart.plugins
 
 import com.fs.starfarer.api.BaseModPlugin
 import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.campaign.FleetAssignment
 import com.fs.starfarer.api.campaign.GenericPluginManagerAPI
-import com.fs.starfarer.api.campaign.SectorAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.impl.campaign.ids.Factions
-import com.fs.starfarer.api.impl.campaign.ids.Tags
-import data.remnantstart.customStart.rs_nexusRaidIntel
+import com.fs.starfarer.api.EveryFrameScript
+import com.fs.starfarer.api.campaign.SectorAPI
+import com.fs.starfarer.ui.new
 import exerelin.campaign.DiplomacyManager
-import java.util.Random
 
 
 class RS_modPlugin: BaseModPlugin() {
@@ -44,6 +42,11 @@ class RS_modPlugin: BaseModPlugin() {
                 }
             }
 
+            if (newGame){
+                Global.getSector().getFaction(Factions.PLAYER).setRelationship(Factions.DERELICT, 0f)
+                Global.getSector().getFaction(Factions.PLAYER).setRelationship(Factions.OMEGA, 0f)
+            }
+
             val remmy = Global.getSector().getFaction(Factions.REMNANTS)
             remmy.isShowInIntelTab = true
         }
@@ -67,16 +70,6 @@ class RS_modPlugin: BaseModPlugin() {
 
                 player.setRelationship(factionId, DiplomacyManager.STARTING_RELATIONSHIP_HOSTILE)
             }
-            player.setRelationship(Factions.DERELICT, 0f)
-            player.setRelationship(Factions.OMEGA, 0f)
-
-            val remmy = Global.getSector().getFaction(Factions.REMNANTS)
-            remmy.setRelationship(Factions.DERELICT, 0f)
-            remmy.setRelationship(Factions.OMEGA, 0f)
-
-            Global.getSector().getFaction(Factions.OMEGA).setRelationship(Factions.REMNANTS, 0f)
-            Global.getSector().getFaction(Factions.DERELICT).setRelationship(Factions.REMNANTS, 0f)
-
         }
     }
 
