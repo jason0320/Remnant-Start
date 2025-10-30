@@ -1,11 +1,11 @@
 {
     "masterVersionFile":"https://raw.githubusercontent.com/jason0320/Remnant-Start/main/remnantstart.version",
     "modName":"zz Remnant Start",
-    "directDownloadURL": "https://github.com/jason0320/Remnant-Start/latest/download/zz.Remnant.Start-v2.1.zip",
+    "directDownloadURL": "https://github.com/jason0320/Remnant-Start/latest/download/zz.Remnant.Start-v2.2.7z",
     "modVersion":
     {
         "major":2,
-        "minor":1,
+        "minor":2,
         "patch":0
     },
 
