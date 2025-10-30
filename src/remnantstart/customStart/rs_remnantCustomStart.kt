@@ -161,6 +161,8 @@ class rs_remnantCustomStart: CustomStart() {
             FactionCommissionIntel(Global.getSector().getFaction(Factions.REMNANTS)).missionAccepted()
             Global.getSector().memoryWithoutUpdate.set("\$nex_startLocation", startloc.id)
 
+            val remmy = Global.getSector().getFaction(Factions.REMNANTS)
+            remmy.isShowInIntelTab = true
         }
 
 
