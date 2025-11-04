@@ -48,15 +48,15 @@ class RS_modPlugin: BaseModPlugin() {
                 Global.getSector().getFaction(Factions.REMNANTS).setRelationship(Factions.DERELICT, 0f)
                 Global.getSector().getFaction(Factions.REMNANTS).setRelationship(Factions.OMEGA, 0f)
 
-                if (Global.getSettings().modManager.isModEnabled("IndEvo")) {
-                    Global.getSector().getFaction(Factions.PLAYER).setRelationship("IndEvo_derelict", 0f)
-                    Global.getSector().getFaction(Factions.REMNANTS).setRelationship("IndEvo_derelict", 0f)
-                }
-
                 Global.getSector().playerFleet.fleetData.membersListCopy.forEach {
                     it.repairTracker.cr = 1f
                     it.status.hullFraction = 1f
                 }
+            }
+
+            if (Global.getSettings().modManager.isModEnabled("IndEvo")) {
+                Global.getSector().getFaction(Factions.PLAYER).setRelationship("IndEvo_derelict", 0f)
+                Global.getSector().getFaction(Factions.REMNANTS).setRelationship("IndEvo_derelict", 0f)
             }
 
             val remmy = Global.getSector().getFaction(Factions.REMNANTS)
