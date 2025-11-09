@@ -7,6 +7,7 @@ import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.EveryFrameScript
 import com.fs.starfarer.api.campaign.SectorAPI
+import com.fs.starfarer.api.impl.campaign.ids.Conditions
 import com.fs.starfarer.ui.new
 import exerelin.campaign.DiplomacyManager
 
@@ -48,6 +49,17 @@ class RS_modPlugin: BaseModPlugin() {
                 Global.getSector().getFaction(Factions.REMNANTS).setRelationship(Factions.DERELICT, 0f)
                 Global.getSector().getFaction(Factions.REMNANTS).setRelationship(Factions.OMEGA, 0f)
 
+                if (Global.getSettings().modManager.isModEnabled("secretsofthefrontier")) {
+                    Global.getSector().getFaction(Factions.PLAYER).setRelationship("sotf_dustkeepers", 0f)
+                    Global.getSector().getFaction(Factions.PLAYER).setRelationship("sotf_dustkeepers_proxies", 0f)
+                    Global.getSector().getFaction(Factions.PLAYER).setRelationship("sotf_sierra_faction", 0f)
+                    Global.getSector().getFaction(Factions.PLAYER).setRelationship("sotf_dreaminggestalt", 0f)
+                    Global.getSector().getFaction(Factions.REMNANTS).setRelationship("sotf_dustkeepers", 0f)
+                    Global.getSector().getFaction(Factions.REMNANTS).setRelationship("sotf_dustkeepers_proxies", 0f)
+                    Global.getSector().getFaction(Factions.REMNANTS).setRelationship("sotf_sierra_faction", 0f)
+                    Global.getSector().getFaction(Factions.REMNANTS).setRelationship("sotf_dreaminggestalt", 0f)
+                }
+
                 Global.getSector().playerFleet.fleetData.membersListCopy.forEach {
                     it.repairTracker.cr = 1f
                     it.status.hullFraction = 1f
@@ -57,6 +69,26 @@ class RS_modPlugin: BaseModPlugin() {
             if (Global.getSettings().modManager.isModEnabled("IndEvo")) {
                 Global.getSector().getFaction(Factions.PLAYER).setRelationship("IndEvo_derelict", 0f)
                 Global.getSector().getFaction(Factions.REMNANTS).setRelationship("IndEvo_derelict", 0f)
+            }
+
+            if (Global.getSettings().modManager.isModEnabled("aotd_qol")) {
+                val market = Global.getSector().economy.getMarket("rs_nexusMarket")
+                if (market.hasCondition(Conditions.DECIVILIZED_SUBPOP)){
+                    market.removeCondition(Conditions.DECIVILIZED_SUBPOP)
+                }
+                if (market.hasCondition(Conditions.DECIVILIZED)){
+                    market.removeCondition(Conditions.DECIVILIZED)
+                }
+                for (i in 2..10) {
+                    val condId = "population_$i"
+                    if (market.hasCondition(condId)) {
+                        market.removeCondition(condId)
+                        market.addCondition(Conditions.POPULATION_1)
+                    }
+                }
+                if (market.size != 1) {
+                    market.size = 1
+                }
             }
 
             val remmy = Global.getSector().getFaction(Factions.REMNANTS)

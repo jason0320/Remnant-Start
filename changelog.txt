@@ -1,3 +1,7 @@
+v2.4.4 (2025/11/9)
+- Fix AoTD Question of Loyalty compatibility
+- Fix SoTF faction hostility
+
 v2.4.2 (2025/11/4)
 - Make Industrial.Evolution Domain System Defence not hostile (for real this time)
 

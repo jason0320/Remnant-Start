@@ -122,11 +122,11 @@ class rs_remnantCustomStart: CustomStart() {
                     "station_side05",
                     Factions.REMNANTS
                 )
-                val market: MarketAPI = Global.getFactory().createMarket("rs_nexusMarket", "Remnant Market", 10)
+                val market: MarketAPI = Global.getFactory().createMarket("rs_nexusMarket", "Remnant Market", 1)
                 market.factionId = Factions.REMNANTS
                 market.primaryEntity = station1
                 station1.market = market
-                market.addCondition(Conditions.POPULATION_10)
+                market.addCondition(Conditions.POPULATION_1)
                 market.addSubmarket(Submarkets.SUBMARKET_OPEN)
                 market.addSubmarket(Submarkets.SUBMARKET_STORAGE)
                 market.addIndustry(Industries.SPACEPORT)
