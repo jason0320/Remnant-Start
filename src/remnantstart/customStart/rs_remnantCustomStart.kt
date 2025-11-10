@@ -24,8 +24,10 @@ import exerelin.utilities.StringHelper
 import lunalib.lunaExtensions.getCustomEntitiesWithType
 import lunalib.lunaExtensions.getSystemsWithTag
 import org.lazywizard.lazylib.MathUtils
+import org.magiclib.kotlin.getLocalResourcesCargo
 import org.magiclib.kotlin.getNearbyFleets
 import org.magiclib.kotlin.getStationFleet
+import org.magiclib.kotlin.getStorageCargo
 import second_in_command.SCUtils
 import kotlin.math.roundToInt
 
@@ -135,6 +137,9 @@ class rs_remnantCustomStart: CustomStart() {
                 market.addTag(Tags.MARKET_NO_OFFICER_SPAWN)
                 market.surveyLevel = MarketAPI.SurveyLevel.FULL
                 Global.getSector().economy.addMarket(market, false)
+
+                market.getCommodityData(Commodities.SUPPLIES).addTradeMod(Factions.REMNANTS, 1500f, 30f)
+                market.getCommodityData(Commodities.FOOD).addTradeMod(Factions.REMNANTS, 5000f, 30f)
 
                 station1.sensorProfile = 0f
                 station1.setInteractionImage("icons", "remnantflag")
