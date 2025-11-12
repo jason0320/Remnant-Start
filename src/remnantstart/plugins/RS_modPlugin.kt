@@ -5,14 +5,10 @@ import com.fs.starfarer.api.Global
 import com.fs.starfarer.api.campaign.GenericPluginManagerAPI
 import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.impl.campaign.ids.Factions
-import com.fs.starfarer.api.EveryFrameScript
-import com.fs.starfarer.api.campaign.SectorAPI
 import com.fs.starfarer.api.impl.campaign.ids.Commodities
 import com.fs.starfarer.api.impl.campaign.ids.Conditions
-import com.fs.starfarer.api.impl.campaign.ids.Industries
-import com.fs.starfarer.ui.new
 import exerelin.campaign.DiplomacyManager
-import org.magiclib.kotlin.getLocalResourcesCargo
+import kaysaar.aotd_question_of_loyalty.data.scripts.commision.AoTDCommissionDataManager
 import lunalib.lunaSettings.LunaSettings
 
 class RS_modPlugin: BaseModPlugin() {
@@ -66,6 +62,7 @@ class RS_modPlugin: BaseModPlugin() {
 
                     if (peacefulMode) {
                         remmy.setRelationship(factionId, 0f)
+                        remmy.setRelationship(Factions.TRITACHYON, 0f)
                         remmy.setRelationship(Factions.PIRATES, DiplomacyManager.STARTING_RELATIONSHIP_HOSTILE)
                         player.setRelationship(Factions.PIRATES, DiplomacyManager.STARTING_RELATIONSHIP_HOSTILE)
                         remmy.setRelationship(Factions.LUDDIC_PATH, DiplomacyManager.STARTING_RELATIONSHIP_HOSTILE)
@@ -132,6 +129,30 @@ class RS_modPlugin: BaseModPlugin() {
                     }
                     if (market.getCommodityData(Commodities.FOOD).available < 5000) {
                         market.getCommodityData(Commodities.FOOD).addTradeMod(Factions.REMNANTS, 5000f, 30f)
+                    }
+                }
+
+                val manager = AoTDCommissionDataManager.getInstance()
+                val rankIds = listOf(
+                    "mercenary",
+                    "auxiliary",
+                    "commander",
+                    "admiral",
+                    "planetary_governor",
+                    "system_governor",
+                    "grand_moff"
+                )
+
+                for (id in rankIds) {
+                    val old = manager.getRank(id)
+                    if (old != null) {
+                        val tags = old.tags.toMutableSet()
+                        if (!tags.contains("nonrestrictive_colonization")) {
+                            tags.add("nonrestrictive_colonization")
+                            old.tags = tags
+                        }
+                        old.tags = tags
+                        manager.addRank(old)
                     }
                 }
             }
