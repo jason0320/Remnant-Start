@@ -7,6 +7,7 @@ import com.fs.starfarer.api.combat.ShipAPI
 import com.fs.starfarer.api.impl.campaign.ids.Factions
 import com.fs.starfarer.api.impl.campaign.ids.Commodities
 import com.fs.starfarer.api.impl.campaign.ids.Conditions
+import data.remnantstart.customStart.rs_nexusRestocker
 import exerelin.campaign.DiplomacyManager
 import kaysaar.aotd_question_of_loyalty.data.scripts.commision.AoTDCommissionDataManager
 import lunalib.lunaSettings.LunaSettings
@@ -40,6 +41,11 @@ class RS_modPlugin: BaseModPlugin() {
                         }
                     }
                 }
+            }
+
+            if (!Global.getSector().listenerManager.hasListenerOfClass(rs_nexusRestocker::class.java))
+            {
+                Global.getSector().listenerManager.addListener(rs_nexusRestocker())
             }
 
             if (newGame){
