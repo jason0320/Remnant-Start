@@ -10,7 +10,9 @@ class rs_nexusRestocker : EconomyTickListener { // restocks nexii monthly
     override fun reportEconomyMonthEnd() {
         val nexii = MiscellaneousThemeGenerator.getRemnantStations(true, false)
         nexii.forEach {
-            it.cargo.clear()
+            if (it.cargo != null) {
+                it.cargo.clear()
+            }
             it.cargo.addAll(addNexusCargo(it))
         }
     }

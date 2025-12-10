@@ -110,9 +110,9 @@ class rs_remnantCustomStart: CustomStart() {
             fleet.fleetData.setSyncNeeded()
             //val stationsystem = Global.getSector().getStarSystem("corvus")
             var stationsystem = Global.getSector().getSystemsWithTag(Tags.THEME_REMNANT_MAIN).random()
-            if (Global.getSettings().modManager.isModEnabled("MODCalveraSystem")) {
-                stationsystem = Global.getSector().getStarSystem("calvera")
-            }
+//            if (Global.getSettings().modManager.isModEnabled("MODCalveraSystem")) {
+//                stationsystem = Global.getSector().getStarSystem("calvera")
+//            }
             val station: SectorEntityToken = stationsystem.addCustomEntity("rs_nexusStorage", "Nexus Global Storage", "station_side05", Factions.NEUTRAL)
             Misc.setAbandonedStationMarket("rs_nexusStorage", station)
             station.sensorProfile = 0f
@@ -169,6 +169,12 @@ class rs_remnantCustomStart: CustomStart() {
             Global.getSector().listenerManager.addListener(rs_nexusRestocker())
             FactionCommissionIntel(Global.getSector().getFaction(Factions.REMNANTS)).missionAccepted()
             Global.getSector().memoryWithoutUpdate.set("\$nex_startLocation", startloc.id)
+//            if (Global.getSettings().modManager.isModEnabled("MODCalveraSystem")) {
+//                val nexusstartCal = WeightedRandomPicker<CampaignFleetAPI>()
+//                nexusstartCal.addAll(nexii.filter { it.starSystem.id.equals("calvera") })
+//                val startlocCal = nexusstartCal.pick()
+//                Global.getSector().memoryWithoutUpdate.set("\$nex_startLocation", startlocCal.id)
+//            }
 
             val remmy = Global.getSector().getFaction(Factions.REMNANTS)
             remmy.isShowInIntelTab = true
