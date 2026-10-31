@@ -1,19 +1,15 @@
 package data.remnantstart.customStart
 
 import com.fs.starfarer.api.Global
-import com.fs.starfarer.api.campaign.CampaignFleetAPI
-import com.fs.starfarer.api.campaign.SectorAPI
-import com.fs.starfarer.api.campaign.SectorEntityToken
 import com.fs.starfarer.api.campaign.comm.IntelInfoPlugin
 import com.fs.starfarer.api.impl.campaign.ids.Tags
 import com.fs.starfarer.api.impl.campaign.intel.BaseIntelPlugin
 import com.fs.starfarer.api.impl.campaign.procgen.themes.MiscellaneousThemeGenerator
+import com.fs.starfarer.api.ui.IntelUIAPI
 import com.fs.starfarer.api.ui.SectorMapAPI
 import com.fs.starfarer.api.ui.TooltipMakerAPI
 import com.fs.starfarer.api.util.IntervalUtil
-import lunalib.lunaExtensions.getCustomEntitiesWithType
-import org.magiclib.kotlin.getNearbyFleets
-import org.magiclib.kotlin.getStationFleet
+import org.lwjgl.input.Keyboard
 
 class rs_nexusLocationIntel: BaseIntelPlugin() {
     val sprite = Global.getSettings().getSpriteName("icons", "remnantflag")
@@ -41,6 +37,46 @@ class rs_nexusLocationIntel: BaseIntelPlugin() {
         }
 
         info.addPara("You may repair and restock at any Remnant Nexus by docking and opening a comm link.", 5f)
+
+        val buttong =  addGenericButton(info, width, "Show Nexuses on map", "rs_nexusLocationToggle")
+        buttong.setShortcut(Keyboard.KEY_T, true)
+    }
+
+    override fun buttonPressConfirmed(buttonId: Any?, ui: IntelUIAPI) {
+        if (buttonId == "rs_nexusLocationToggle"){
+            toggleNexusList(this, ui)
+        }
+    }
+    fun toggleNexusList(curr: IntelInfoPlugin?, ui: IntelUIAPI) {
+        val removelist = ArrayList<IntelInfoPlugin>()
+        Global.getSector().intelManager.getIntel(rs_nexusShowLocationIntel::class.java).forEach {
+            removelist.add(it)
+        }
+        removelist.forEach {
+            Global.getSector().intelManager.removeIntel(it)
+        }
+        if (ui.isShowingCustomIntelSubset) {
+            ui.updateIntelList(true)
+            ui.updateUIForItem(curr)
+            //for (IntelInfoPlugin intel : Global.getSector().getIntelManager().getIntel(LuddicShrineIntel.class)) {
+            for (intel in Global.getSector().intelManager.getIntel(rs_nexusLocationIntel::class.java)) {
+                ui.selectItem(intel)
+                break
+            }
+        } else {
+            MiscellaneousThemeGenerator.getRemnantStations(true, false).forEach {
+                Global.getSector().intelManager.addIntel(rs_nexusShowLocationIntel(it), true)
+
+            }
+            val show: MutableList<IntelInfoPlugin> = ArrayList()
+            for (intel in Global.getSector().intelManager.getIntel(rs_nexusShowLocationIntel::class.java)) {
+                show.add(intel)
+            }
+            Global.getSector().intelManager.sortIntel(show)
+            ui.updateIntelList(true, show)
+            ui.updateUIForItem(curr)
+        }
+        return
     }
 
     override fun getIcon(): String {
